@@ -11,21 +11,28 @@ import AddUser from '../components/AddUser'
  * @class App
  * @extends {Component}
  */
-class App extends Component {
+class UserContainer extends Component {
   componentDidMount() {
     this.props.fetchUsersSuccess();
   }
   render() {
-    const { fetching, fetchingError, users, children, addUser, deleteUser } = this.props;
+    const { fetching, fetchingError, users, children, addUser, deleteUser, resetAddUserError } = this.props;
     return (
-      <div className="container">
+      <div>
         {fetchingError && this._renderFetchingError}
-        {!fetching && this._renderAddUser(addUser)}
+        {this._renderHeaderTitle()}
+        {!fetching && this._renderAddUser(addUser, resetAddUserError)}
         {!fetching && this._renderUsersList(users, deleteUser)}
         {children}
       </div>
     )
   }
+
+  _renderHeaderTitle = () => (
+    <div>
+        <h2>Users</h2>
+    </div>
+  )
   _renderFetchingError = () => {
     return <div style={{ color: "red" }}>Error fetching users</div>
   }
@@ -45,12 +52,12 @@ class App extends Component {
     deleteUser(userId);
   }
 
-  _renderAddUser = (addUser) => {
-    return <AddUser addUser={addUser} />
+  _renderAddUser = (addUser, resetAddUserError) => {
+    return <AddUser addUser={addUser} resetAddUserError= {resetAddUserError}/>
   }
 }
 
-App.propTypes = {
+UserContainer.propTypes = {
   fetching: PropTypes.bool,
   users: PropTypes.array,
   fetchUsersError: PropTypes.object,
@@ -94,4 +101,4 @@ const mapsDispatchToProps = dispatch => {
 
   }
 }
-export default connect(mapStateToProps, mapsDispatchToProps)(App); 
+export default connect(mapStateToProps, mapsDispatchToProps)(UserContainer); 

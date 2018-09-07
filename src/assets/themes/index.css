@@ -45,7 +45,8 @@ table {
   background-color: #eee; }
   .container div {
     background-color: orange;
-    color: blue; }
+    color: blue;
+    padding: 20px; }
     .container div ul {
       display: flex;
       flex-direction: row;
