@@ -1,25 +1,31 @@
 import { combineReducers, applyMiddleware, createStore, compose } from 'redux'
-import createSagaMiddleware  from 'redux-saga'
-import {createLogger} from 'redux-logger'
+import createSagaMiddleware from 'redux-saga'
+import { createLogger } from 'redux-logger'
 // reducers
-import {reducer as userReducer} from './UserRedux'
+import { reducer as userReducer } from './UserRedux'
 
-import { fetchUsersSuccess} from '../sagas/userSaga';
+import { fetchUsersStart } from '../sagas/userSaga';
 
-export default (()=>{
-    const rootReducer= combineReducers({
+export default (() => {
+
+    const middleware = []
+    const enhancers = []
+
+    const rootReducer = combineReducers({
         users: userReducer
     })
-    const middlewares=[]
-    const enhancers=[]
-    const sagaMiddleware=createSagaMiddleware()
-    middlewares.push(sagaMiddleware);
-   
-    const logger= createLogger()
-    middlewares.push(logger)
 
-    enhancers.push(applyMiddleware(...middlewares))
-    const store= createStore(rootReducer, compose(...enhancers))
-    sagaMiddleware.run(fetchUsersSuccess);
+    const sagaMiddleware = createSagaMiddleware()
+    middleware.push(sagaMiddleware);
+
+    const logger = createLogger()
+    middleware.push(logger)
+
+    enhancers.push(applyMiddleware(...middleware))
+
+    const store = createStore(rootReducer, compose(...enhancers))
+
+    sagaMiddleware.run(fetchUsersStart);
+
     return store;
 })()
