@@ -55,7 +55,7 @@ export const resetFetchingUsersError = state => state.merge({ fetchUsersError: n
 // add user
 export const addUserSuccess = (state, { newUser }) => state.merge({
     newUser,
-    users: [...state.users, newUser],
+    users: [ newUser, ...state.users],
     addUserError: false
 })
 export const addUserError= (state, {error})=>state.merge({
@@ -67,7 +67,7 @@ export const resetAddUserError = state => state.merge({ addUserError: null})
 //delete user
 export const deleteUserSuccess = (state, { id }) => state.merge({
     deleteUserError: false,
-    users: [...state.users.filter(user =>id !== user.id)]
+    users: [...state.users.filter(user => id !== user.id)]
 })
 export const deleteUserError = (state, { error }) => state.merge({
     deleteUserError: error,

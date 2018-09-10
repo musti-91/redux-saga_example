@@ -5,16 +5,14 @@ import { connect } from 'react-redux'
 
 import UserActions from '../redux/UserRedux'
 
-import AddUser from '../components/AddUser'
+import AddItem from '../components/AddItem'
+import ListItem from '../components/ListItem';
 
 /**
  * @class App
  * @extends {Component}
  */
 class UserContainer extends Component {
-  componentDidMount() {
-    this.props.fetchUsersSuccess();
-  }
   render() {
     const { fetching, fetchingError, users, children, addUser, deleteUser, resetAddUserError } = this.props;
     return (
@@ -30,7 +28,7 @@ class UserContainer extends Component {
 
   _renderHeaderTitle = () => (
     <div>
-        <h2>Users</h2>
+      <h2>Users</h2>
     </div>
   )
   _renderFetchingError = () => {
@@ -40,20 +38,36 @@ class UserContainer extends Component {
   _renderUsersList = (users, deleteUser) => {
     return (
       <ul>
-        {users.map((user, i) =>
-          <li key={i}>{user.name}
-            <button onClick={this.deleteUser(user.id, deleteUser)}>delete user</button>
-          </li>)}
+        {users.map(user =>
+          <ListItem
+            text={user.name}
+            description={user.email}
+            hasButton={true}
+            btnName="delete user"
+            key={user.id}
+            onButtonClicked={() => deleteUser(user.id)}
+          />
+        )}
       </ul>
     )
-
-  }
-  deleteUser = (userId, deleteUser) => () => {
-    deleteUser(userId);
   }
 
-  _renderAddUser = (addUser, resetAddUserError) => {
-    return <AddUser addUser={addUser} resetAddUserError= {resetAddUserError}/>
+  _renderAddUser = () => {
+    return (
+      <AddItem
+        addItem={this._onAddedUser}
+        buttonName="ADD USER"
+      />
+    )
+  }
+  _onAddedUser = newUser => {
+    const newUserObj = {
+      name: newUser,
+      id: Math.floor(Math.random() * 100) + 10,
+      email: "someone@gmail.com"
+    }
+    console.log(newUserObj)
+    this.props.addUser(newUserObj)
   }
 }
 
@@ -62,7 +76,7 @@ UserContainer.propTypes = {
   users: PropTypes.array,
   fetchUsersError: PropTypes.object,
   resetFetchingUsersError: PropTypes.func,
-  fetchUsersSuccess: PropTypes.func.isRequired,
+  fetchUsersStart: PropTypes.func.isRequired,
   // add user
   newUser: PropTypes.object,
   addUserError: PropTypes.bool,
@@ -84,18 +98,18 @@ const mapStateToProps = state => ({
   //delete user
   userId: state.users.userId,
   deleteUserError: state.users.deleteUserError,
- 
+
 });
 const mapsDispatchToProps = dispatch => {
   return {
     // fetching 
-    fetchUsersSuccess: () => dispatch(UserActions.fetchUsersStart()),
+    fetchUsersStart: () => dispatch(UserActions.fetchUsersStart()),
     resetFetchingUsersError: () => dispatch(UserActions.resetFetchingUsersError()),
 
     // delete user
     deleteUser: (userId) => dispatch(UserActions.deleteUser(userId)),
     resetDeleteUserError: () => dispatch(UserActions.resetDeleteUserError()),
-    
+
     addUser: (newUser) => dispatch(UserActions.addUser(newUser)),
     resetAddUserError: () => dispatch(UserActions.resetAddUserError()),
 

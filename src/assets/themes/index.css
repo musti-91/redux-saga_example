@@ -44,9 +44,9 @@ table {
   align-self: center;
   background-color: #eee; }
   .container div {
-    background-color: orange;
     color: blue;
-    padding: 20px; }
+    padding: 20px;
+    width: 50%; }
     .container div ul {
       display: flex;
       flex-direction: row;
@@ -57,3 +57,28 @@ table {
         color: "green";
         font-family: fantasy;
         font-size: 20px; }
+
+.listItem {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  font-size: 22px;
+  margin-bottom: 4px;
+  line-height: 30px;
+  color: "green";
+  font-family: fantasy; }
+  .listItem .btn {
+    width: 30%;
+    padding: 4px;
+    color: #ccc;
+    background-color: teal;
+    border: 0;
+    outline: none;
+    border-radius: 5px;
+    transition: all 500ms;
+    font-size: 20px; }
+    .listItem .btn:hover {
+      color: teal;
+      background-color: #ccc; }

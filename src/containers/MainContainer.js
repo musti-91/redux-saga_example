@@ -1,16 +1,23 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import UserContainer from './UserContainer';
+import TodoContainer from './TodoContainer';
 
 
+import { connect } from 'react-redux'
 class MainContainer extends Component {
   render() {
 
     return (
       <div className='container'>
         <UserContainer />
+        <TodoContainer />
       </div>
     )
   }
 }
-export default MainContainer
+
+MainContainer.propTypes = {
+
+}
+
+export default connect(null, null)(MainContainer)
