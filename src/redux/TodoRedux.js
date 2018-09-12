@@ -9,7 +9,7 @@ const { Types, Creators } = createActions({
   fetchTodosFailure: ["error"],
   resetFetchingTodosError: null,
   // add todo
-  addTodo: ["todo"],
+  addTodo: ["newTodo"],
   addTodoFailure: ["error"],
   resetAddTodoError: null,
   // delete Todo 
@@ -54,7 +54,7 @@ export const resetFetchingTodosError = state => state.merge({ resetFetchingTodos
 // add Todo 
 export const addTodoSuccess = (state, { newTodo }) => state.merge({
   newTodo,
-  addTodoError: false,
+  addTodoError: null,
   todos: [newTodo, ...state.todos]
 })
 export const addTodoFailure = (state, { error }) => state.merge({
@@ -65,7 +65,7 @@ export const resetAddTodoError = state => state.merge({ addTodoError: null })
 
 // delete todo 
 export const deleteTodoSuccess = (state, { id }) => state.merge({
-  deleteTodoError: false,
+  deleteTodoError: null,
   todos: [...state.todos.filter(todo => id !== todo.id)]
 })
 export const deleteTodoFailure = (state, { error }) => state.merge({

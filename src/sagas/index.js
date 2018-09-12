@@ -20,4 +20,4 @@ export default (()=>{
             takeLatest(TodosTypes.DELETE_TODO, deleteTodo)
         ])
     }
-})
+})()

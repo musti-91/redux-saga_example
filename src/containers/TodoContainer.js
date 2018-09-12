@@ -7,15 +7,24 @@ import TodoActions from '../redux/TodoRedux'
 import ListItem from '../components/ListItem'
 import AddItem from '../components/AddItem'
 class TodoContainer extends Component {
+  componentDidMount() {
+    this.props.fetchTodosStart()
+  }
   render() {
-    const { todos, deleteTodo } = this.props
+    const { todos, deleteTodo, fetching } = this.props
     return (
       <div className='todo_container'>
-        {this._renderAddTodo()}
-        {this._renderTodos(todos, deleteTodo)}
+        {this._renderHeader()}
+        {!fetching && this._renderAddTodo()}
+        {!fetching && this._renderTodos(todos, deleteTodo)}
       </div>
     )
   }
+  _renderHeader = () => (
+    <header>
+      <h2>Todos</h2>
+    </header>
+  )
   _renderAddTodo = () => {
     return (
       <AddItem
@@ -26,12 +35,11 @@ class TodoContainer extends Component {
   }
   _onAddTodo = (retrievedValue) => {
     const newTodoObj = {
-      userId: Math.floor(Math.random() * 100)+ 20,
+      userId: Math.floor(Math.random() * 100) + 20,
       id: Math.floor(Math.random() * 100) + 300,
-      title: retrievedValue,
+      title: "Something",
       completed: false
     }
-    console.log(newTodoObj)
     this.props.addTodo(newTodoObj)
   }
 
@@ -57,13 +65,23 @@ class TodoContainer extends Component {
 
 }
 TodoContainer.propTypes = {
-  todos: PropTypes.array
+  todos: PropTypes.array,
+  fetching: PropTypes.bool,
+  fetchTodosError: PropTypes.object,
+  addTodoError: PropTypes.object,
+  deleteTodoError: PropTypes.object,
+  // functions
+  addTodo: PropTypes.func,
+  deleteTodo: PropTypes.func,
+  fetchTodosStart: PropTypes.func
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps= state => ({
   todos: state.todos.todos,
-  deleteTodo: PropTypes.func,
-  addTodo: PropTypes.func
+  fetching: state.todos.fetching,
+  fetchTodosError: state.todos.fetchTodosError,
+  addTodoError: state.todos.addTodoError,
+  deleteTodoError: state.todos.deleteTodoError
 })
 const mapDispatchToProps = dispatch => ({
   fetchTodosStart: () => dispatch(TodoActions.fetchTodosStart()),

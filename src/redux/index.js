@@ -5,8 +5,8 @@ import { createLogger } from 'redux-logger'
 import { reducer as userReducer } from './UserRedux'
 import {reducer as todoReducer } from './TodoRedux'
 
-import { fetchUsersStart } from '../sagas/userSaga';
-import { fetchTodosStart } from '../sagas/TodoSaga';
+
+import RootSaga from '../sagas'
 
 export default (() => {
 
@@ -28,7 +28,8 @@ export default (() => {
 
     const store = createStore(rootReducer, compose(...enhancers))
 
-    sagaMiddleware.run(fetchUsersStart)
-    sagaMiddleware.run(fetchTodosStart)
+    sagaMiddleware.run(RootSaga)
+    // sagaMiddleware.run(fetchUsersStart)
+    // sagaMiddleware.run(fetchTodosStart)
     return store;
 })()

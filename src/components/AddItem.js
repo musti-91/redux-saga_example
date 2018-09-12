@@ -11,31 +11,31 @@ class AddItem extends Component {
     }
   }
   render() {
-    const { value } = this.state;
-    const { addItem, buttonName} = this.props;
+    const { addItem, buttonName, hasButton, placeHolder, onChange } = this.props;
     return (
       <div>
-        {this._renderAddUserForm(value, addItem, buttonName)}
+        {this._renderAddUserForm(addItem, buttonName, hasButton, placeHolder, onChange)}
       </div>
     )
   }
-  _renderAddUserForm(value, addItem, buttonName) {
+  _renderAddUserForm(addItem, buttonName, hasButton, placeHolder, onChange) {
     return (
       <form onSubmit={this._onSubmit(addItem)}>
-        <input type='text' value={value} onChange={this._onChangeValue} />
-        <button onClick={this._onSubmit(addItem)}>{buttonName}</button>
+        <input type='text' onChange={this._onChangeValue(onChange)} placeholder={placeHolder}/>
+        {hasButton && <button onClick={this._onSubmit(addItem)}>{buttonName}</button>}
       </form>
     )
   }
-  _onChangeValue = (e) => {
-    this.setState({
-      value: e.target.value
-    })
+  _onChangeValue = (onChange)=> (e) => {
+    const {value}= e.target
+    if(value.trim("") !== ""){
+      onChange(value)
+    }
   }
 
   _onSubmit = (addItem) => (e) => {
     e.preventDefault()
-    const { value } = this.state;
+    const { value } = this.state
     if (value.trim("") !== "") {
       addItem(value)
     }
@@ -49,8 +49,14 @@ class AddItem extends Component {
 }
 
 AddItem.propTypes = {
-  addItem: PropTypes.func.isRequired,
-  buttonName: PropTypes.string.isRequired
+  onChange: PropTypes.func,
+  buttonName: PropTypes.string.isRequired,
+  hasButton: PropTypes.bool,
+  placeHolder: PropTypes.string
+}
+AddItem.defaultProps = {
+  hasButton: true,
+  placeHolder: "show something"
 }
 
 export default AddItem

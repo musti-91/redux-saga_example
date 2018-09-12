@@ -23,10 +23,10 @@ export function* fetchTodosStart() {
 
 // add Todo
 export function* addTodo(newTodo) {
-  try{
+  try {
     yield put(TodoActions.addTodoSuccess(newTodo))
   }
-  catch(error) {
+  catch (error) {
     yield put(TodoActions.addTodoFailure(error))
   }
 }

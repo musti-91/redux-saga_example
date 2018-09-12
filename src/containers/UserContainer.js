@@ -8,18 +8,28 @@ import UserActions from '../redux/UserRedux'
 import AddItem from '../components/AddItem'
 import ListItem from '../components/ListItem';
 
+import ConfirmButton from '../components/Buttons/ConfirmButton'
 /**
  * @class App
  * @extends {Component}
  */
 class UserContainer extends Component {
+  state = {
+    user: {
+      name: null,
+      email: null
+    }
+  }
+  componentDidMount() {
+    this.props.fetchUsersStart()
+  }
   render() {
-    const { fetching, fetchingError, users, children, addUser, deleteUser, resetAddUserError } = this.props;
+    const { fetching, fetchingError, users, children, deleteUser } = this.props;
     return (
       <div>
         {fetchingError && this._renderFetchingError}
         {this._renderHeaderTitle()}
-        {!fetching && this._renderAddUser(addUser, resetAddUserError)}
+        {!fetching && this._renderAddUser()}
         {!fetching && this._renderUsersList(users, deleteUser)}
         {children}
       </div>
@@ -40,11 +50,11 @@ class UserContainer extends Component {
       <ul>
         {users.map(user =>
           <ListItem
+            key={user.id}
             text={user.name}
             description={user.email}
             hasButton={true}
             btnName="delete user"
-            key={user.id}
             onButtonClicked={() => deleteUser(user.id)}
           />
         )}
@@ -54,20 +64,42 @@ class UserContainer extends Component {
 
   _renderAddUser = () => {
     return (
-      <AddItem
-        addItem={this._onAddedUser}
-        buttonName="ADD USER"
-      />
+      <div>
+        <AddItem
+          onChange={this._onAddedUser}
+          buttonName="add user"
+          hasButton={false}
+          placeHolder='user name'
+        />
+        <AddItem
+          onChange={this._onEmailAdded}
+          buttonName="add email"
+          hasButton={false}
+          placeHolder="email"
+        />
+        <ConfirmButton title="add user" onConfirm={this._onConfirm} buttonClassName="addUserButton" />
+      </div>
     )
   }
   _onAddedUser = newUser => {
-    const newUserObj = {
-      name: newUser,
-      id: Math.floor(Math.random() * 100) + 10,
-      email: "someone@gmail.com"
-    }
-    console.log(newUserObj)
-    this.props.addUser(newUserObj)
+    this.setState(() => ({
+      user: {
+        name: newUser
+      }
+    }))
+  }
+  _onEmailAdded = newEmail => {
+    this.setState(() => ({
+      user: {
+        email: newEmail
+      }
+    }))
+  }
+  _onConfirm = () => {
+    const { name, email } = this.state.user
+    const user = { email, name, id: Math.floor(Math.random() * 30) + 11 }
+    this.props.addUser(user)
+
   }
 }
 

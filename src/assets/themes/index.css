@@ -36,15 +36,21 @@ table {
   border-spacing: 0; }
 
 .container {
-  width: 900px;
+  width: 1400px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
   align-self: center;
   background-color: #eee; }
+  .container .addUserButton {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+  .container h2 {
+    font-family: fantasy; }
   .container div {
-    color: blue;
+    color: teal;
     padding: 20px;
     width: 50%; }
     .container div ul {
@@ -68,10 +74,16 @@ table {
   margin-bottom: 4px;
   line-height: 30px;
   color: "green";
-  font-family: fantasy; }
+  font-family: fantasy;
+  transition: all 500ms; }
+  .listItem .completed {
+    text-decoration: line-through;
+    color: orange;
+    transition: all 500ms; }
+  .listItem .itemText {
+    color: teal; }
   .listItem .btn {
-    width: 30%;
-    padding: 4px;
+    text-align: center;
     color: #ccc;
     background-color: teal;
     border: 0;
