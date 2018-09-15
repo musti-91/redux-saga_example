@@ -51,7 +51,7 @@ export const fetchTodosFailure = (state, { error }) => state.merge({
 })
 export const resetFetchingTodosError = state => state.merge({ resetFetchingTodosError: null })
 
-// add Todo 
+// add Todo
 export const addTodoSuccess = (state, { newTodo }) => state.merge({
   newTodo,
   addTodoError: null,
@@ -80,7 +80,7 @@ export const reducer = createReducer(INITIAL_STATE, {
   [Types.FETCH_TODOS_SUCCESS]: fetchTodosSuccess,
   [Types.FETCH_TODOS_FAILURE]: fetchTodosFailure,
   [Types.RESET_FETCHING_TODOS_ERROR]: resetFetchingTodosError,
-  // // add Todo
+  // add Todo
   [Types.ADD_TODO]: addTodoSuccess,
   [Types.ADD_TODO_FAILURE]: addTodoFailure,
   [Types.RESET_ADD_TODO_ERROR]: resetAddTodoError,

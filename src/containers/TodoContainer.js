@@ -4,8 +4,8 @@ import { connect } from 'react-redux'
 
 import TodoActions from '../redux/TodoRedux'
 
-import ListItem from '../components/ListItem'
-import AddItem from '../components/AddItem'
+import ListItem from '../components/tables/ListItem'
+import AddForm from '../components/forms/AddForm'
 class TodoContainer extends Component {
   componentDidMount() {
     this.props.fetchTodosStart()
@@ -27,9 +27,10 @@ class TodoContainer extends Component {
   )
   _renderAddTodo = () => {
     return (
-      <AddItem
+      <AddForm
         addItem={this._onAddTodo}
-        buttonName='ADD TODO'
+        buttonLabel='ADD TODO'
+        placeHolder='insert new todo'
       />
     )
   }
@@ -37,7 +38,7 @@ class TodoContainer extends Component {
     const newTodoObj = {
       userId: Math.floor(Math.random() * 100) + 20,
       id: Math.floor(Math.random() * 100) + 300,
-      title: "Something",
+      title: retrievedValue,
       completed: false
     }
     this.props.addTodo(newTodoObj)
@@ -51,7 +52,7 @@ class TodoContainer extends Component {
           text={todo.title}
           isComplete={todo.completed}
           hasButton={true}
-          btnName='Delete'
+          buttonLabel='Delete'
           key={todo.id}
           onButtonClicked={() => deleteTodo(todo.id)}
         />
@@ -76,7 +77,7 @@ TodoContainer.propTypes = {
   fetchTodosStart: PropTypes.func
 }
 
-const mapStateToProps= state => ({
+const mapStateToProps = state => ({
   todos: state.todos.todos,
   fetching: state.todos.fetching,
   fetchTodosError: state.todos.fetchTodosError,

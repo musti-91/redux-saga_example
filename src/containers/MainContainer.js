@@ -14,8 +14,8 @@ class MainContainer extends Component {
     fetchTodosStart()
     fetchUserStart()
   }
-  render() {
 
+  render() {
     return (
       <div className='container'>
         <UserContainer />

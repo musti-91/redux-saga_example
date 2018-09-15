@@ -5,10 +5,10 @@ import { connect } from 'react-redux'
 
 import UserActions from '../redux/UserRedux'
 
-import AddItem from '../components/AddItem'
-import ListItem from '../components/ListItem';
+import AddForm from '../components/forms/AddForm'
+import ListItem from '../components/tables/ListItem';
 
-import ConfirmButton from '../components/Buttons/ConfirmButton'
+import ConfirmButton from '../components/buttons/ConfirmButton'
 /**
  * @class App
  * @extends {Component}
@@ -54,7 +54,7 @@ class UserContainer extends Component {
             text={user.name}
             description={user.email}
             hasButton={true}
-            btnName="delete user"
+            buttonLabel="delete user"
             onButtonClicked={() => deleteUser(user.id)}
           />
         )}
@@ -65,13 +65,13 @@ class UserContainer extends Component {
   _renderAddUser = () => {
     return (
       <div>
-        <AddItem
+        <AddForm
           onChange={this._onAddedUser}
           buttonName="add user"
           hasButton={false}
           placeHolder='user name'
         />
-        <AddItem
+        <AddForm
           onChange={this._onEmailAdded}
           buttonName="add email"
           hasButton={false}
@@ -81,6 +81,7 @@ class UserContainer extends Component {
       </div>
     )
   }
+
   _onAddedUser = newUser => {
     this.setState(() => ({
       user: {
@@ -117,7 +118,7 @@ UserContainer.propTypes = {
   //delete user
   userId: PropTypes.object,
   deleteUserError: PropTypes.bool,
-  resetDeleteUserError: PropTypes.func,
+  resetdeleteUserError: PropTypes.func,
 }
 
 const mapStateToProps = state => ({
@@ -140,7 +141,7 @@ const mapsDispatchToProps = dispatch => {
 
     // delete user
     deleteUser: (userId) => dispatch(UserActions.deleteUser(userId)),
-    resetDeleteUserError: () => dispatch(UserActions.resetDeleteUserError()),
+    resetdeleteUserError: () => dispatch(UserActions.resetdeleteUserError()),
 
     addUser: (newUser) => dispatch(UserActions.addUser(newUser)),
     resetAddUserError: () => dispatch(UserActions.resetAddUserError()),
