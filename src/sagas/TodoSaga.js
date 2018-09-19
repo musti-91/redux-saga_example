@@ -4,7 +4,7 @@ import axios from 'axios'
 import TodoActions from '../redux/TodoRedux'
 
 
-function apiCall() {
+export function apiCall() {
   return axios({
     method: 'get',
     url: 'http://jsonplaceholder.typicode.com/todos'
@@ -12,11 +12,12 @@ function apiCall() {
 }
 
 // fetching 
-export function* fetchTodosStart() {
-  try {
-    const response = yield call(apiCall)
-    yield put(TodoActions.fetchTodosSuccess(response.data))
-  } catch (error) {
+export function* fetchTodosStart(api) {
+  const { ok, data } = yield call(api.get)
+  if (ok) {
+    yield put(TodoActions.fetchTodosSuccess(data.data))
+  } else {
+    const error= `fetching data rejected${data}`
     yield put(TodoActions.fetchTodosFailure(error))
   }
 }
@@ -40,3 +41,4 @@ export function* deleteTodo(todoId) {
     yield put(TodoActions.deleteTodoError(error))
   }
 }
+export default fetchTodosStart

@@ -1,6 +1,8 @@
 
-import { takeLatest, takeEvery } from 'redux-saga';
+import { takeLatest, takeEvery } from 'redux-saga/effects';
 import { all } from 'redux-saga/effects';
+
+import apiConfig from '../config/AppliactionConfig'
 
 import { UserTypes } from '../redux/UserRedux' 
 import { TodosTypes } from '../redux/TodoRedux'
@@ -11,7 +13,7 @@ export default (()=>{
     return function* rootSaga(){
         yield all([
             // users
-            takeEvery(UserTypes.FETCH_USERS_START, fetchUsersStart),
+            takeEvery(UserTypes.FETCH_USERS_START, fetchUsersStart, apiConfig),
             takeLatest(UserTypes.ADD_USER, addUser),
             takeLatest(UserTypes.DELETE_USER, deleteUser),
             // todos
