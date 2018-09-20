@@ -42,7 +42,8 @@ table {
   justify-content: space-between;
   align-items: flex-start;
   align-self: center;
-  background-color: #eee; }
+  background-color: #eee;
+  font-family: fantasy; }
   .container .addUserButton {
     display: flex;
     justify-content: space-between;

@@ -1,4 +1,4 @@
-import { all, takeLatest, takeEvery } from 'redux-saga/effects'
+import { all, takeEvery } from 'redux-saga/effects'
 
 
 
@@ -16,7 +16,7 @@ import * as api from '../config/applicationConfig'
 export default (() => {
   return function* root () {
     yield all([
-      takeEvery(StartupTypes.STARTUP, startup),
+      takeEvery(StartupTypes.STARTUP, startup, api.getPosts),
       takeEvery(PostTypes.FETCH_POSTS_START, fetchPosts, api.getPosts),
     ])
   }

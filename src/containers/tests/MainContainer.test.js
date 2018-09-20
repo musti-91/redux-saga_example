@@ -2,8 +2,8 @@ import React from "react"
 import { shallow, mount } from 'enzyme'
 import MainContainer from '../MainContainer'
 
-
-describe('<MainContainer/>', () => {
+import { Provider } from 'react-redux'
+describe('>>> ^^ START_TESTING_POINT ^^ >>> <MainContainer/>', () => {
   const children = <div> render some children </div>
   const manyChildren = [
     <div key={1}> child-1</div>,
@@ -12,11 +12,22 @@ describe('<MainContainer/>', () => {
     <div key={4}> child-4</div>,
     <div key={5}> child-5</div>,
   ]
-  const wrapper = shallow(<MainContainer>{children}</MainContainer>)
+  let wrapper
+  let manyChildrenWrapper
+  const store = {
+    subscribe: jest.fn(),
+    dispatch: jest.fn(),
+    getState: jest.fn()
+  }
   it('render without crashing', () => {
-    mount(<MainContainer>
-      {children}
-    </MainContainer>)
+    wrapper = shallow(
+      <MainContainer store={store}>
+        {children}
+      </MainContainer>
+    )
+  })
 
+  it('render with many children', () => {
+    manyChildrenWrapper = shallow(<MainContainer store={store}>{manyChildren}</MainContainer>)
   })
 })

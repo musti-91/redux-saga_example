@@ -4,9 +4,9 @@ import PostsActions from "../redux/PostRedux"
 /**
  * TODO:create function where you can call it and pass args to fetch api with axios
  */
-export function* startup () {
+export function* startup (api) {
   /**
    * TODO: check if the user logged in or not and check for session logged in user
    */
-  yield put(PostsActions.fetchPostsStart())
+  yield put(PostsActions.fetchPostsStart(api))
 }
