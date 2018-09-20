@@ -1,37 +1,46 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
-import UserContainer from './UserContainer';
-import TodoContainer from './TodoContainer';
 
 import { connect } from 'react-redux'
+import PostsActions from '../redux/PostRedux';
 
-import UserActions from '../redux/UserRedux'
-import TodosActions from '../redux/TodoRedux'
 
+/**
+ * MainContainer will run first fetches
+ */
 class MainContainer extends Component {
-  componentDidMount(){
-    const {fetchTodosStart, fetchUserStart} =this.props
-    fetchTodosStart()
-    fetchUserStart()
+  componentDidMount () {
+    const { fetchPostsStart } = this.props
+    fetchPostsStart()
   }
 
-  render() {
+  render () {
+    const { children, posts } = this.props
     return (
       <div className='container'>
-        <UserContainer />
-        <TodoContainer />
+        {/* <UserContainer />
+        <TodoContainer /> */}
+        {children}
       </div>
     )
   }
 }
 
 MainContainer.propTypes = {
-  fetchTodosStart: PropTypes.func,
-  fetchUsersStart: PropTypes.func
+  // state props
+  posts: PropTypes.array,
+  busyFetchingPosts: PropTypes.bool,
+  // dispatch props
+  fetchPostsStart: PropTypes.func,
 }
 
-const mapsDispatchToProps= dispatch => ({
-  fetchUserStart: () => dispatch(UserActions.fetchUsersStart()),
-  fetchTodosStart: () => dispatch(TodosActions.fetchTodosStart())
+const mapStateToProps = state => ({
+  posts: state.posts.potts,
+  busyFetchingPosts: state.posts.busyFetchingPosts
 })
-export default connect(null, mapsDispatchToProps)(MainContainer)
+
+const mapsDispatchToProps = dispatch => ({
+  fetchPostsStart: () => dispatch(PostsActions.fetchPostsStart())
+})
+
+export default connect(mapStateToProps, mapsDispatchToProps)(MainContainer)

@@ -56,7 +56,9 @@
     "build": "node scripts/build.js",
     "start": "node scripts/start.js",
     "test": "node scripts/test.js --env=jsdom",
-    "test:coverage": "node scripts/test.js --env=jsdom --coverage"
+    "test:coverage": "node scripts/test.js --env=jsdom --coverage",
+    "lint": "./node_modules/.bin/eslint src",
+    "lint-fixup": "./node_modules/.bin/eslint src --ext .js,.jsx --fix"
   },
   "jest": {
     "verbose": true,
@@ -108,7 +110,7 @@
     "extends": "react-app"
   },
   "devDependencies": {
-    "eslint": "^5.5.0",
+    "eslint": "^5.6.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-react-app": "^2.1.0",
     "eslint-loader": "^1.9.0",

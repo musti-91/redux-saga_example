@@ -1,35 +1,17 @@
-import { combineReducers, applyMiddleware, createStore, compose } from 'redux'
-import createSagaMiddleware from 'redux-saga'
-import { createLogger } from 'redux-logger'
+import { combineReducers } from 'redux'
 // reducers
-import { reducer as userReducer } from './UserRedux'
-import {reducer as todoReducer } from './TodoRedux'
+import { reducer as postsReducer } from './PostRedux'
 
 
 import RootSaga from '../sagas'
 
+import configureStore from "../redux/CreateStore"
+
 export default (() => {
-
-    const middleware = []
-    const enhancers = []
-
     const rootReducer = combineReducers({
-        users: userReducer,
-        todos: todoReducer
+        posts: postsReducer
     })
+    const rootSaga = RootSaga
 
-    const sagaMiddleware = createSagaMiddleware()
-    middleware.push(sagaMiddleware);
-
-    const logger = createLogger()
-    middleware.push(logger)
-
-    enhancers.push(applyMiddleware(...middleware))
-
-    const store = createStore(rootReducer, compose(...enhancers))
-
-    sagaMiddleware.run(RootSaga)
-    // sagaMiddleware.run(fetchUsersStart)
-    // sagaMiddleware.run(fetchTodosStart)
-    return store;
+    return configureStore(rootReducer, rootSaga)
 })()
