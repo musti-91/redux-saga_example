@@ -10,12 +10,14 @@ import { StartupTypes } from '../redux/StartupRedux'
 import { fetchPosts } from './PostsSaga'
 import { startup } from './StartupSaga';
 
+/**     api       */
+import * as api from '../config/applicationConfig'
 
 export default (() => {
   return function* root () {
     yield all([
       takeEvery(StartupTypes.STARTUP, startup),
-      takeEvery(PostTypes.FETCH_POSTS_START, fetchPosts),
+      takeEvery(PostTypes.FETCH_POSTS_START, fetchPosts, api.getPosts),
     ])
   }
 })()
