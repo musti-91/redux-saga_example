@@ -1,6 +1,5 @@
 
 export function* fetchContext (api) {
-
   /** start fetching application  */
   const { ok, data } = yield call(api, header)
 

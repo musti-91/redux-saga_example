@@ -30,22 +30,22 @@ global.render = render
 global.mount = mount
 global.sinon = sinon
 
-// export const historyMock = { push: jest.fn() }
-// global.history = historyMock
+export const historyMock = { push: jest.fn() }
+global.history = historyMock
 
-// const sessionMock = { resetExpiry: jest.fn() }
-// global.sessionHandler = sessionMock
+const sessionMock = { resetExpiry: jest.fn() }
+global.sessionHandler = sessionMock
 
-// const authContextMock = { logOut: jest.fn() }
-// global.authContext = authContextMock
+const authContextMock = { logOut: jest.fn() }
+global.authContext = authContextMock
 
-// export const apiMock = {
-//   get: jest.fn(),
-//   post: jest.fn(),
-//   put: jest.fn(),
-//   delete: jest.fn(),
-// }
-// global.open = jest.fn()
+export const apiMock = {
+  get: jest.fn(),
+  post: jest.fn(),
+  put: jest.fn(),
+  delete: jest.fn(),
+}
+global.open = jest.fn()
 
-// const consoleMock = { warn: jest.fn(), log: console.log, error: console.error }
-// global.console = consoleMock
+const consoleMock = { warn: jest.fn(), log: console.log, error: console.error }
+global.console = consoleMock

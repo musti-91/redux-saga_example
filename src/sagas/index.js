@@ -1,23 +1,33 @@
-import { all, takeEvery } from 'redux-saga/effects'
+import { all, takeEvery, takeLatest } from 'redux-saga/effects'
 
 
 
 /**          Types          */
-import { PostTypes } from '../redux/PostRedux'
 import { StartupTypes } from '../redux/StartupRedux'
+import { PostTypes } from '../redux/PostRedux'
+import { FilterTypes } from '../redux/FilterRedux'
 
 /**        actions         */
-import { fetchPosts } from './PostsSaga'
-import { startup } from './StartupSaga';
+import { fetchPosts, addPost, updatePost, deletePost } from './PostsSaga'
+import { filterPosts } from './FilterSaga'
+import { startup } from './StartupSaga'
 
 /**     api       */
-import * as api from '../config/applicationConfig'
+import { api } from '../config/applicationConfig'
 
 export default (() => {
   return function* root () {
     yield all([
-      takeEvery(StartupTypes.STARTUP, startup, api.getPosts),
-      takeEvery(PostTypes.FETCH_POSTS_START, fetchPosts, api.getPosts),
+      takeEvery(StartupTypes.STARTUP, startup, api),
+      takeEvery(PostTypes.FETCH_POSTS_START, fetchPosts, api),
+      // add post
+      takeLatest(PostTypes.ADD_POST, addPost, api),
+      // edit post
+      takeLatest(PostTypes.UPDATE_POST, updatePost, api),
+      // Delete post
+      takeLatest(PostTypes.DELETE_POST, deletePost, api),
+      // filter posts
+      takeLatest(FilterTypes.FILTER_POSTS_BY_USER, filterPosts, api)
     ])
   }
 })()

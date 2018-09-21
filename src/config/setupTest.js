@@ -21,10 +21,10 @@ const authContext = { logOut: jest.fn() }
 global.authContext = authContext
 
 export const apiMock = {
-  get: jest.fn(),
-  post: jest.fn(),
-  put: jest.fn(),
-  delete: jest.fn()
+  get: jest.fn(() => 'GET'),
+  post: jest.fn(() => 'POST'),
+  put: jest.fn(() => 'PUT'),
+  delete: jest.fn(() => 'DELETE')
 }
 
-global.open= jest.fn()
+global.open = jest.fn()
